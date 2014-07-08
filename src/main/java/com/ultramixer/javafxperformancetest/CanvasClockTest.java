@@ -5,7 +5,6 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -14,9 +13,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.commons.lang.time.DurationFormatUtils;
@@ -27,16 +30,17 @@ import java.util.logging.Logger;
 /**
  * Created by TB on 08.07.15.
  */
-public class ClockTest extends Application
+public class CanvasClockTest extends Application
 {
     private Timeline clockTimeline;
-    private Label clockLabel;
     private ToggleButton startStopButton;
     private long startTime = 0;
     private Label fpsLabel;
     private PerformanceTracker tracker;
 
     private Logger logger = Logger.getLogger(getClass().getName());
+    private Canvas canvas;
+    private GraphicsContext canvasContext;
 
 
     public static void main(String[] args)
@@ -49,11 +53,18 @@ public class ClockTest extends Application
     {
         stage.setTitle("Test: Digital Clock");
 
+        VBox root = new VBox();
 
-        clockLabel = new Label("00:00:00");
-        clockLabel.setManaged(true);
-        clockLabel.setCacheHint(CacheHint.SPEED);
-        clockLabel.setStyle("-fx-font-size: 10em;-fx-text-fill: white;");
+
+        this.canvas = new Canvas();
+        this.canvas.setCacheHint(CacheHint.SPEED);
+
+        this.canvas.widthProperty().bind(
+                root.widthProperty());
+        this.canvas.setHeight(300);
+
+
+        this.canvasContext = canvas.getGraphicsContext2D();
 
         startStopButton = new ToggleButton("Start/Stop");
         startStopButton.setStyle("-fx-background-color: rgba(255,255,255,.4)");
@@ -77,12 +88,11 @@ public class ClockTest extends Application
         fpsLabel.setStyle("-fx-font-size: 1em;-fx-text-fill: white;");
 
 
-        VBox root = new VBox();
         root.setStyle("-fx-background-color: #333");
         root.setAlignment(Pos.CENTER);
-        root.getChildren().addAll(clockLabel, startStopButton, fpsLabel);
+        root.getChildren().addAll(canvas, startStopButton, fpsLabel);
 
-        VBox.setMargin(fpsLabel,new Insets(20,0,0,0));
+        VBox.setMargin(fpsLabel, new Insets(20, 0, 0, 0));
 
 
         Scene scene = new Scene(root, 640, 480);
@@ -92,10 +102,7 @@ public class ClockTest extends Application
 
         this.createClockTimeline();
 
-        this.createPerformanceTracker(scene);
-
-        // clockLabel.setCache(false);
-        // clockLabel.setCacheShape(true);
+        //this.createPerformanceTracker(scene);
 
 
     }
@@ -115,7 +122,7 @@ public class ClockTest extends Application
             }
         };
 
-        //frameRateMeter.start();
+        frameRateMeter.start();
     }
 
     private float getFPS()
@@ -133,11 +140,22 @@ public class ClockTest extends Application
                 {
                     public void handle(ActionEvent t)
                     {
-                        //clockLabel.setText(DurationFormatUtils.formatDuration(System.currentTimeMillis() - startTime, "mm:ss:SSS"));
-                        clockLabel.setText(String.valueOf(System.currentTimeMillis() - startTime));
+                        drawText(DurationFormatUtils.formatDuration(System.currentTimeMillis() - startTime, "mm:ss:SSS"));
                     }
                 }));
         clockTimeline.setCycleCount(Timeline.INDEFINITE);
+
+
+    }
+
+    private void drawText(String s)
+    {
+
+        canvasContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+        canvasContext.setFill(Color.WHITE);
+        canvasContext.setFont(Font.font(84.0));
+        canvasContext.fillText(s, canvas.getWidth() / 2 - 200, canvas.getHeight() / 2);
 
 
     }
