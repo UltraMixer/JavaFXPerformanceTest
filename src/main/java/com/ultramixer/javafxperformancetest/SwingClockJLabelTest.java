@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 /**
  * Created by TB on 10.07.15.
  */
-public class SwingClockComponentTest extends JFrame
+public class SwingClockJLabelTest extends JFrame
 {
     private JLabel clockLabel;
     private JToggleButton startStopButton;
@@ -20,7 +20,7 @@ public class SwingClockComponentTest extends JFrame
     private Timer clockTimer;
 
 
-    public SwingClockComponentTest()
+    public SwingClockJLabelTest()
     {
         this.setTitle("Test: Digital Clock");
 
@@ -109,7 +109,7 @@ public class SwingClockComponentTest extends JFrame
 
     public static void main(String[] args)
     {
-        new SwingClockComponentTest();
+        new SwingClockJLabelTest();
 
     }
 

@@ -10,9 +10,9 @@ import java.util.logging.Logger;
 /**
  * Created by TB on 10.07.15.
  */
-public class SwingClockCanvasTest extends JFrame
+public class SwingClockJPanelTest extends JFrame
 {
-    private final Canvas clockCanvas;
+    private final JPanel clockCanvas;
     private JToggleButton startStopButton;
     private long startTime = 0;
     private JLabel fpsLabel;
@@ -23,15 +23,15 @@ public class SwingClockCanvasTest extends JFrame
     private Font clockFont = UIManager.getFont("Label.font");
 
 
-    public SwingClockCanvasTest()
+    public SwingClockJPanelTest()
     {
-        this.setTitle("Test: Digital Clock - Swing - Canvas");
+        this.setTitle("Test: Digital Clock - Swing - JPanel");
 
         clockFont = clockFont.deriveFont(120f);
 
 
         /* headline */
-        JLabel headlineLabel = new JLabel("Clock via Swing and Canvas");
+        JLabel headlineLabel = new JLabel("Clock via Swing and JPanel-Graphics2D");
         headlineLabel.setFont(headlineLabel.getFont().deriveFont(26f));
         headlineLabel.setForeground(new Color(200, 200, 200));
         headlineLabel.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -43,31 +43,25 @@ public class SwingClockCanvasTest extends JFrame
 
 
         /* Clock */
-        this.clockCanvas = new Canvas()
+        this.clockCanvas = new JPanel()
         {
             @Override
-            public void update(Graphics g)
+            protected void paintComponent(Graphics g)
             {
-                paint(g);
-            }
+                super.paintComponent(g);
 
-            @Override
-            public void paint(Graphics g)
-            {
                 if (clock != null)
                 {
                     Graphics2D g2d = (Graphics2D) g;
                     g2d.setColor(Color.white);
-                    g2d.clearRect(0,0,getWidth(),getHeight());
-
                     g2d.setFont(clockFont);
                     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                    // g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
+                    //g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
                     g2d.drawString(clock, 10, 100);
-                  //  g2d.dispose();
                 }
             }
         };
+        this.clockCanvas.setOpaque(false);
         clockCanvas.setPreferredSize(new Dimension(640, 300));
 
 
@@ -133,7 +127,7 @@ public class SwingClockCanvasTest extends JFrame
 
     public static void main(String[] args)
     {
-        new SwingClockCanvasTest();
+        new SwingClockJPanelTest();
 
     }
 
