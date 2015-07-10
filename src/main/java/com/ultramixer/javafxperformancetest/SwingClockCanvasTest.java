@@ -45,21 +45,16 @@ public class SwingClockCanvasTest extends JFrame
         /* Clock */
         this.clockCanvas = new Canvas()
         {
-            @Override
-            public void update(Graphics g)
-            {
-                paint(g);
-            }
+
 
             @Override
             public void paint(Graphics g)
             {
+                super.paint(g);
                 if (clock != null)
                 {
                     Graphics2D g2d = (Graphics2D) g;
                     g2d.setColor(Color.white);
-                    g2d.clearRect(0,0,getWidth(),getHeight());
-
                     g2d.setFont(clockFont);
                     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                     // g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
