@@ -22,7 +22,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.apache.commons.lang.time.DurationFormatUtils;
 
 import java.util.logging.Logger;
 
@@ -30,7 +29,7 @@ import java.util.logging.Logger;
 /**
  * Created by TB on 08.07.15.
  */
-public class CanvasClockTest extends Application
+public class JavaFXClockCanvasTest extends Application
 {
     private Timeline clockTimeline;
     private ToggleButton startStopButton;
@@ -41,6 +40,7 @@ public class CanvasClockTest extends Application
     private Logger logger = Logger.getLogger(getClass().getName());
     private Canvas canvas;
     private GraphicsContext canvasContext;
+    private Label headlineLabel;
 
 
     public static void main(String[] args)
@@ -55,6 +55,9 @@ public class CanvasClockTest extends Application
 
         VBox root = new VBox();
 
+        this.headlineLabel = new Label("Clock via JavaFX and Canvas");
+        this.headlineLabel.setStyle("-fx-font-size: 26px;-fx-text-fill: #AAA;");
+
 
         this.canvas = new Canvas();
         this.canvas.setCacheHint(CacheHint.SPEED);
@@ -65,6 +68,7 @@ public class CanvasClockTest extends Application
 
 
         this.canvasContext = canvas.getGraphicsContext2D();
+
 
         startStopButton = new ToggleButton("Start/Stop");
         startStopButton.setStyle("-fx-background-color: rgba(255,255,255,.4)");
@@ -90,7 +94,7 @@ public class CanvasClockTest extends Application
 
         root.setStyle("-fx-background-color: #333");
         root.setAlignment(Pos.CENTER);
-        root.getChildren().addAll(canvas, startStopButton, fpsLabel);
+        root.getChildren().addAll(headlineLabel, canvas, startStopButton, fpsLabel);
 
         VBox.setMargin(fpsLabel, new Insets(20, 0, 0, 0));
 
@@ -99,8 +103,10 @@ public class CanvasClockTest extends Application
         stage.setScene(scene);
         stage.show();
 
-
         this.createClockTimeline();
+
+        this.drawText("00:00:000");
+
 
         //this.createPerformanceTracker(scene);
 
@@ -140,7 +146,7 @@ public class CanvasClockTest extends Application
                 {
                     public void handle(ActionEvent t)
                     {
-                        drawText(DurationFormatUtils.formatDuration(System.currentTimeMillis() - startTime, "mm:ss:SSS"));
+                        drawText(TestUtils.formatDuration(System.currentTimeMillis() - startTime));
                     }
                 }));
         clockTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -154,8 +160,8 @@ public class CanvasClockTest extends Application
         canvasContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         canvasContext.setFill(Color.WHITE);
-        canvasContext.setFont(Font.font(84.0));
-        canvasContext.fillText(s, canvas.getWidth() / 2 - 200, canvas.getHeight() / 2);
+        canvasContext.setFont(Font.font(130.0));
+        canvasContext.fillText(s, canvas.getWidth() / 2 - 300, canvas.getHeight() / 2 + 50);
 
 
     }

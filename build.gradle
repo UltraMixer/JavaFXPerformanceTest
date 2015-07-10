@@ -21,7 +21,7 @@ allprojects {
 
   apply plugin: 'org.javafxports.jfxmobile'
 
-  mainClassName = "com.ultramixer.javafxperformancetest.ClockTest"
+  mainClassName = "com.ultramixer.javafxperformancetest.JavaFXClockNodeTest"
 
   repositories {
     jcenter()
@@ -32,7 +32,6 @@ allprojects {
   }
 
   dependencies {
-    compile "commons-lang:commons-lang:2.6"
 
   }
 
