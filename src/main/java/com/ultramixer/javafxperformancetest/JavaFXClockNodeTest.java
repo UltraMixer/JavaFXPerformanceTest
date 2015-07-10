@@ -18,7 +18,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.apache.commons.lang.time.DurationFormatUtils;
 
 import java.util.logging.Logger;
 
@@ -26,7 +25,7 @@ import java.util.logging.Logger;
 /**
  * Created by TB on 08.07.15.
  */
-public class ClockTest extends Application
+public class JavaFXClockNodeTest extends Application
 {
     private Timeline clockTimeline;
     private Label clockLabel;
@@ -36,6 +35,7 @@ public class ClockTest extends Application
     private PerformanceTracker tracker;
 
     private Logger logger = Logger.getLogger(getClass().getName());
+    private Label headlineLabel;
 
 
     public static void main(String[] args)
@@ -43,13 +43,16 @@ public class ClockTest extends Application
         launch(args);
     }
 
+
     @Override
     public void start(Stage stage) throws Exception
     {
         stage.setTitle("Test: Digital Clock");
 
+        headlineLabel = new Label("Clock via JavaFX and Nodes");
+        headlineLabel.setStyle("-fx-font-size: 26px;-fx-text-fill: #AAA;");
 
-        clockLabel = new Label("00:00:00");
+        clockLabel = new Label("00:00:000");
         clockLabel.setManaged(true);
         clockLabel.setCacheHint(CacheHint.SPEED);
         clockLabel.setStyle("-fx-font-size: 10em;-fx-text-fill: white;");
@@ -79,9 +82,9 @@ public class ClockTest extends Application
         VBox root = new VBox();
         root.setStyle("-fx-background-color: #333");
         root.setAlignment(Pos.CENTER);
-        root.getChildren().addAll(clockLabel, startStopButton, fpsLabel);
+        root.getChildren().addAll(headlineLabel,clockLabel, startStopButton, fpsLabel);
 
-        VBox.setMargin(fpsLabel,new Insets(20,0,0,0));
+        VBox.setMargin(fpsLabel, new Insets(20, 0, 0, 0));
 
 
         Scene scene = new Scene(root, 640, 480);
@@ -114,7 +117,7 @@ public class ClockTest extends Application
             }
         };
 
-        frameRateMeter.start();
+        //frameRateMeter.start();
     }
 
     private float getFPS()
@@ -124,7 +127,6 @@ public class ClockTest extends Application
         return fps;
     }
 
-
     public void createClockTimeline()
     {
         this.clockTimeline = new Timeline(
@@ -132,7 +134,7 @@ public class ClockTest extends Application
                 {
                     public void handle(ActionEvent t)
                     {
-                        clockLabel.setText(DurationFormatUtils.formatDuration(System.currentTimeMillis() - startTime, "mm:ss:SSS"));
+                        clockLabel.setText(TestUtils.formatDuration(System.currentTimeMillis() - startTime));
                     }
                 }));
         clockTimeline.setCycleCount(Timeline.INDEFINITE);
