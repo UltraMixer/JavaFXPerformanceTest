@@ -30,7 +30,7 @@ import java.util.logging.Logger;
  */
 public class JavaFXNodeAnimationTest extends Application
 {
-    public static final int NO_ANIMATION_NODES = 5;
+    public static final int NO_ANIMATION_NODES = 1;
 
 
     private ToggleButton startStopButton;
