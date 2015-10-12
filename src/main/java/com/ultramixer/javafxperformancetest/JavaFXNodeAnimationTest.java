@@ -61,7 +61,7 @@ public class JavaFXNodeAnimationTest extends Application
         headlineLabel = new Label("Animation via JavaFX and Nodes");
         headlineLabel.setStyle("-fx-font-size: 26px;-fx-text-fill: #AAA;");
 
-        this.image = new Image("http://www.ich-und-so-weiter.de/wp-content/uploads/2014/06/Fußball.png");
+        this.image = new Image("http://www.ich-und-so-weiter.de/wp-content/uploads/2014/06/Fußball.png",false);
 
         for (int i = 0; i < NO_ANIMATION_NODES; i++)
         {
