@@ -22,14 +22,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: com.miglayout:miglayout-core:5.0" level="project" />
     <orderEntry type="library" name="Maven: com.miglayout:miglayout-javafx:5.0" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: sigar:sigar:1.0.0">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/sigar.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="Maven: org.fusesource:sigar:1.6.4" level="project" />
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.15" level="project" />
   </component>
 </module>

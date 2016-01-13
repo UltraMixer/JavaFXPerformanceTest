@@ -45,6 +45,7 @@
             <artifactId>miglayout-javafx</artifactId>
             <version>5.0</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>sigar</groupId>
             <artifactId>sigar</artifactId>
@@ -58,6 +59,16 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        /7-->
+
+        <dependency>
+            <groupId>org.fusesource</groupId>
+            <artifactId>sigar</artifactId>
+            <version>1.6.4</version>
+            <scope>compile</scope>
+        </dependency>
+
+
     </dependencies>
 
 
