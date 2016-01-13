@@ -38,12 +38,12 @@
         <dependency>
             <groupId>com.miglayout</groupId>
             <artifactId>miglayout-core</artifactId>
-            <version>5.1-SNAPSHOT</version>
+            <version>5.0</version>
         </dependency>
         <dependency>
             <groupId>com.miglayout</groupId>
             <artifactId>miglayout-javafx</artifactId>
-            <version>5.1-SNAPSHOT</version>
+            <version>5.0</version>
         </dependency>
         <dependency>
             <groupId>sigar</groupId>
@@ -51,12 +51,12 @@
             <version>1.0.0</version>
             <scope>system</scope>
             <systemPath>${pom.basedir}/libs/sigar.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.bley</groupId>
-            <artifactId>tbley</artifactId>
-            <version>3.0.14</version>
-            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>*</artifactId>
+                    <groupId>*</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
