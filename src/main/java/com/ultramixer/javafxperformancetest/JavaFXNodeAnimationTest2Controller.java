@@ -1,8 +1,8 @@
 package com.ultramixer.javafxperformancetest;
 
-import com.bley.java.lang.Lang_HC;
 import com.sun.javafx.perf.PerformanceTracker;
-import com.ultramixer.util.MathAverage_HC;
+import com.ultramixer.javafxperformancetest.util.MathAverage;
+import com.ultramixer.javafxperformancetest.util.TestUtils;
 import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -37,6 +37,7 @@ import java.util.logging.Logger;
  */
 public class JavaFXNodeAnimationTest2Controller implements Initializable
 {
+    public static final int NO_ANIMATION_NODES = 1;
     private static final double TEST_DURATION = 30;
     private static final double NODE_SIZE = 128;
     public Pane animationPane;
@@ -53,14 +54,15 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
     private boolean stopMonitoring = false;
     private String cpuUsage = "";
     private Double testCpuUsage = null;
-
     private long refreshRate = 1000;
-
     private Logger logger = Logger.getLogger(getClass().getName());
     private long pid;
-    private MathAverage_HC cpuLoggerAverage;
+    private MathAverage cpuLoggerAverage;
     private Timeline cpuLogger;
     private Timeline tt;
+    private long startTime = 0;
+    private PerformanceTracker tracker;
+    private AnimationTimer a;
 
     public Scene getScene()
     {
@@ -74,18 +76,10 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
 
     }
 
-    public static final int NO_ANIMATION_NODES = 1;
-
-    private long startTime = 0;
-    private PerformanceTracker tracker;
-
-
-    private AnimationTimer a;
-
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        cpuLoggerAverage = new MathAverage_HC(10);
+        cpuLoggerAverage = new MathAverage(10);
 
         this.movingImage = new Image("http://www.ich-und-so-weiter.de/wp-content/uploads/2014/06/Fußball.png");
         //this.movingImage = new Image(getClass().getResource("/test.jpg").toExternalForm());
@@ -213,7 +207,7 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
                     {
                         ProcCpu cpu = sigar.getProcCpu(pid);
                         double percent = cpu.getPercent() * 100;
-                        Platform.runLater(() -> cpuValue.setText(Lang_HC.round(percent, 1) + " %"));
+                        Platform.runLater(() -> cpuValue.setText(TestUtils.round(percent, 1) + " %"));
                     }
                     catch (SigarException e)
                     {
@@ -245,7 +239,7 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
             {
                 cpuLogger.stop();
                 a.stop();
-                cpuAvgValue.setText((com.bley.java.lang.Lang_HC.round(cpuLoggerAverage.getHarmonicMedian() * 100, 1)) + " %");
+                cpuAvgValue.setText((TestUtils.round(cpuLoggerAverage.getHarmonicMedian() * 100, 1)) + " %");
 
                 System.out.println("cpuLoggerAverage.getHarmonicMedian() = " + cpuLoggerAverage.getHarmonicMedian());
                 System.out.println("cpuLoggerAverage.getQuadradicMedian() = " + cpuLoggerAverage.getQuadradicMedian());
@@ -268,7 +262,7 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
                     cpu = sigar.getProcCpu(pid);
 
                     cpuLoggerAverage.addNumber(cpu.getPercent());
-                    cpuAvgValue.setText((com.bley.java.lang.Lang_HC.round(cpuLoggerAverage.getHarmonicMedian() * 100, 1)) + " %");
+                    cpuAvgValue.setText((TestUtils.round(cpuLoggerAverage.getHarmonicMedian() * 100, 1)) + " %");
                 }
                 catch (SigarException e)
                 {
@@ -287,4 +281,6 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
 
 
     }
+
+
 }

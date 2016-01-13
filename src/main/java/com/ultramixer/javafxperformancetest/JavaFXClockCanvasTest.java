@@ -1,6 +1,7 @@
 package com.ultramixer.javafxperformancetest;
 
 import com.sun.javafx.perf.PerformanceTracker;
+import com.ultramixer.javafxperformancetest.util.TestUtils;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
