@@ -87,8 +87,8 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
     {
         cpuLoggerAverage = new MathAverage_HC(10);
 
-        //this.movingImage = new Image("http://www.ich-und-so-weiter.de/wp-content/uploads/2014/06/Fußball.png");
-        this.movingImage = new Image(getClass().getResource("/test.jpg").toExternalForm());
+        this.movingImage = new Image("http://www.ich-und-so-weiter.de/wp-content/uploads/2014/06/Fußball.png");
+        //this.movingImage = new Image(getClass().getResource("/test.jpg").toExternalForm());
         System.out.println("movingImage = " + movingImage);
 
 
