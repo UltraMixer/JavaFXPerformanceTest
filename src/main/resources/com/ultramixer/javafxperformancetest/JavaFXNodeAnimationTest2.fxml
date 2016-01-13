@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import com.ultramixer.javafxperformancetest.NullLayoutPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import org.tbee.javafx.scene.layout.fxml.MigPane?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      styleClass="dialog,image-editor"
+      fx:id="root" fx:controller="com.ultramixer.javafxperformancetest.JavaFXNodeAnimationTest2Controller">
+
+    <MigPane layout="" cols="[][][]push[][]push[][]" rows="[]" style="-fx-background-color: #BBBBBB;">
+        <Label text="Tests"></Label>
+        <ComboBox></ComboBox>
+
+        <CheckBox fx:id="useCachingCheckBox" text="Use Caching"></CheckBox>
+
+        <Label text="CPU:"></Label>
+        <Label fx:id="cpuValue"></Label>
+
+        <Label text="CPU (avg):"></Label>
+        <Label fx:id="cpuAvgValue"></Label>
+
+        <ToggleButton text="Play/Stop" fx:id="playStopButton"></ToggleButton>
+        <Button text="Start Test" onAction="#handleStartTest"></Button>
+    </MigPane>
+    <NullLayoutPane fx:id="animationPane" VBox.vgrow="ALWAYS"></NullLayoutPane>
+
+</VBox>

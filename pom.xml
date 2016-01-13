@@ -7,6 +7,58 @@
     <groupId>com.ultramixer</groupId>
     <artifactId>javafx-performance-test</artifactId>
     <version>1.0.0</version>
+    <properties>
+        <jetHome>/Applications/Developer/Java/jet11/jet11.0-eval-amd64/</jetHome>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.excelsiorjet</groupId>
+                <artifactId>excelsior-jet-maven-plugin</artifactId>
+                <version>0.2.0</version>
+                <configuration>
+                    <mainClass>com.ultramixer.javafxperformancetest.JavaFXNodeAnimationTest2</mainClass>
+                    <hideConsole>false</hideConsole>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout-core</artifactId>
+            <version>5.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout-javafx</artifactId>
+            <version>5.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>sigar</groupId>
+            <artifactId>sigar</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/libs/sigar.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.bley</groupId>
+            <artifactId>tbley</artifactId>
+            <version>3.0.14</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 
 </project>

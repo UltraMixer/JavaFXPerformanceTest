@@ -20,5 +20,41 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.miglayout:miglayout-core:5.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.miglayout:miglayout-javafx:5.1-SNAPSHOT" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: sigar:sigar:1.0.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/sigar.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Maven: com.bley:tbley:3.0.14" level="project" />
+    <orderEntry type="library" name="Maven: com.ultramixer:ultramixer-gui:2.1.5" level="project" />
+    <orderEntry type="library" name="Maven: com.ultramixer:ultramixer-util:1.1.9" level="project" />
+    <orderEntry type="library" name="Maven: org.jdom:jdom:1.1.3" level="project" />
+    <orderEntry type="library" name="Maven: org.swinglabs.swingx:swingx-core:1.6.6.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.swinglabs.swingx:swingx-autocomplete:1.6.6.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.swinglabs.swingx:swingx-common:1.6.6.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.swinglabs.swingx:swingx-action:1.6.6.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.swinglabs.swingx:swingx-plaf:1.6.6.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.swinglabs.swingx:swingx-graphics:1.6.6.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.swinglabs.swingx:swingx-painters:1.6.6.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.software4java:jadaptivemenu:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.4" level="project" />
+    <orderEntry type="library" name="Maven: net.java.dev.jna:jna:4.2.1" level="project" />
+    <orderEntry type="library" name="Maven: net.java.dev.jna:jna-platform:4.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.ultramixer.jnativejava7:jnativejava7-core:1.1.7" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-exec:1.3" level="project" />
+    <orderEntry type="library" name="Maven: com.miglayout:miglayout-swing:5.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.miglayout:miglayout-ideutil:5.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: jaxen:jaxen:1.1.4" level="project" />
+    <orderEntry type="library" name="Maven: com.ultramixer:tablelayout:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: saxpath:saxpath:1.0-FCS" level="project" />
+    <orderEntry type="library" name="Maven: junit:junit:4.12" level="project" />
+    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
   </component>
 </module>
