@@ -1,5 +1,7 @@
 package com.ultramixer.javafxperformancetest;
 
+import com.ultramixer.javafxperformancetest.util.TestUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
