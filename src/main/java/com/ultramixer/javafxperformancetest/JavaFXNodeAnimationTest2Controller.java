@@ -40,11 +40,14 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
     public static final int NO_ANIMATION_NODES = 1;
     private static final double TEST_DURATION = 30;
     private static final double NODE_SIZE = 128;
+    private static final double FRAME_RATE = 60;
+
     public Pane animationPane;
     public CheckBox useCachingCheckBox;
     public ToggleButton playStopButton;
     public Label cpuValue;
     public Label cpuAvgValue;
+    public Label fpsValue;
     private ArrayList<Node> animationNodes = new ArrayList<Node>();
     private ArrayList<TranslateTransition> animationTransitions = new ArrayList<TranslateTransition>();
     private Image movingImage;
@@ -63,6 +66,9 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
     private long startTime = 0;
     private PerformanceTracker tracker;
     private AnimationTimer a;
+    private boolean logging = true;
+    private boolean profiling = true;
+    private double x;
 
     public Scene getScene()
     {
@@ -81,14 +87,9 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
     {
         cpuLoggerAverage = new MathAverage(10);
 
-        this.movingImage = new Image("http://www.ich-und-so-weiter.de/wp-content/uploads/2014/06/Fußball.png");
-        //this.movingImage = new Image(getClass().getResource("/test.jpg").toExternalForm());
-        System.out.println("movingImage = " + movingImage);
 
-
-        //this.movingNode = createAnimationImageNode();
-        this.movingNode = createAnimationRegionNode();
-        this.movingNode.cacheProperty().bind(useCachingCheckBox.selectedProperty());
+        this.movingNode = createAnimationImageNode();
+        //this.movingNode = createAnimationRegionNode();
 
         //animationTransitions.add(createTransition(movingNode));
 
@@ -113,11 +114,12 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
             {
                 if (newValue)
                 {
-                    a.start();
+                    playAnimation(true);
+
                 }
                 else
                 {
-                    a.stop();
+                    playAnimation(false);
                 }
             }
         });
@@ -129,19 +131,57 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
         //root.setCacheHint(CacheHint.SPEED);
     }
 
+    private void playAnimation(boolean b)
+    {
+        //a.start();
+        Thread t = new Thread()
+        {
+
+            public void run()
+            {
+
+                while (true)
+                {
+                    x = movingNode.getTranslateX() + 1;
+                    if (Math.abs(x) > scene.getWidth() - NODE_SIZE)
+                    {
+                        x = 5;
+                    }
+                    Platform.runLater(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            movingNode.setTranslateX(x);
+                        }
+                    });
+                    try
+                    {
+                        Thread.sleep((long) ((1000 / FRAME_RATE)));
+                    }
+                    catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        t.start();
+    }
+
     private void createAnimation()
     {
 
         Timeline tt = new Timeline();
-        tt.getKeyFrames().add(new KeyFrame(Duration.millis(1000.0 / 60.0), new EventHandler<ActionEvent>()
+        tt.getKeyFrames().add(new KeyFrame(Duration.millis(1000.0 / FRAME_RATE), new EventHandler<ActionEvent>()
         {
             @Override
             public void handle(ActionEvent event)
             {
                 double x = movingNode.getTranslateX() + 1;
-                if (Math.abs(x) > scene.getWidth())
+                if (Math.abs(x) > scene.getWidth() - NODE_SIZE)
                 {
-                    x = 0;
+                    x = NODE_SIZE;
                 }
                 movingNode.setTranslateX(x);
             }
@@ -155,18 +195,57 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
             @Override
             public void handle(long now)
             {
+                /*
                 double x = movingNode.getTranslateX() + 1;
-                if (Math.abs(x) > scene.getWidth())
+                if (Math.abs(x) > scene.getWidth() - NODE_SIZE)
                 {
-                    x = 0;
+                    x = 5;
                 }
                 movingNode.setTranslateX(x);
 
+
+                if (logging)
+                {
+                    float fps = getFPS();
+                    fpsValue.setText(String.format("Current frame rate: %.0f fps", fps));
+                }
+
                 //  cpuValue.setText(String.format("%f02",tracker.getAverageFPS()));
+
+*/
             }
         };
+
     }
 
+    private float getFPS()
+    {
+        float fps = tracker.getInstantFPS();
+        //tracker.resetAverageFPS();
+        return fps;
+    }
+
+
+    public void createPerformanceTracker(Scene scene)
+    {
+        tracker = PerformanceTracker.getSceneTracker(scene);
+        AnimationTimer frameRateMeter = new AnimationTimer()
+        {
+
+            @Override
+            public void handle(long now)
+            {
+                float fps = getFPS();
+                if (logging)
+                {
+                    fpsValue.setText(String.format("Current frame rate: %.0f fps", fps));
+                }
+
+            }
+        };
+
+        //frameRateMeter.start();
+    }
 
     private Region createAnimationRegionNode()
     {
@@ -185,9 +264,17 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
         ImageView iv = new ImageView(movingImage);
         iv.setFitWidth(NODE_SIZE);
         iv.setFitHeight(NODE_SIZE);
-        iv.setManaged(true);
+        iv.setManaged(false);
         iv.setCacheHint(CacheHint.SPEED);
-        iv.setCache(true);
+        iv.cacheProperty().bind(useCachingCheckBox.selectedProperty());
+
+        this.movingImage = new Image("http://www.ich-und-so-weiter.de/wp-content/uploads/2014/06/Fußball.png");
+        //this.movingImage = new Image(getClass().getResource("/test.jpg").toExternalForm());
+        System.out.println("movingImage = " + movingImage);
+
+        iv.setImage(this.movingImage);
+
+
         return iv;
     }
 
@@ -207,7 +294,10 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
                     {
                         ProcCpu cpu = sigar.getProcCpu(pid);
                         double percent = cpu.getPercent() * 100;
-                        Platform.runLater(() -> cpuValue.setText(TestUtils.round(percent, 1) + " %"));
+                        if (logging)
+                        {
+                            Platform.runLater(() -> cpuValue.setText(TestUtils.round(percent, 1) + " %"));
+                        }
                     }
                     catch (SigarException e)
                     {
@@ -231,53 +321,76 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
 
     public void handleStartTest(ActionEvent actionEvent)
     {
-        tt = new Timeline();
-        tt.getKeyFrames().add(new KeyFrame(Duration.seconds(TEST_DURATION), new EventHandler<ActionEvent>()
+        if (profiling)
         {
-            @Override
-            public void handle(ActionEvent event)
+            tt = new Timeline();
+            tt.getKeyFrames().add(new KeyFrame(Duration.seconds(TEST_DURATION), new EventHandler<ActionEvent>()
             {
-                cpuLogger.stop();
-                a.stop();
-                cpuAvgValue.setText((TestUtils.round(cpuLoggerAverage.getHarmonicMedian() * 100, 1)) + " %");
+                @Override
+                public void handle(ActionEvent event)
+                {
+                    cpuLogger.stop();
+                    a.stop();
+                    if (logging)
+                    {
+                        cpuAvgValue.setText((TestUtils.round(cpuLoggerAverage.getHarmonicMedian() * 100, 1)) + " %");
+                    }
 
-                System.out.println("cpuLoggerAverage.getHarmonicMedian() = " + cpuLoggerAverage.getHarmonicMedian());
-                System.out.println("cpuLoggerAverage.getQuadradicMedian() = " + cpuLoggerAverage.getQuadradicMedian());
-                System.out.println("cpuLoggerAverage.getWindorsAverage() = " + cpuLoggerAverage.getWindorsAverage());
-                System.out.println("cpuLoggerAverage.getWindorsHarmonicMedian() = " + cpuLoggerAverage.getWindorsHarmonicMedian());
-                System.out.println("cpuLoggerAverage.getWindorsOptimized() = " + cpuLoggerAverage.getWindorsOptimized());
-            }
-        }));
+                    System.out.println("cpuLoggerAverage.getHarmonicMedian() = " + cpuLoggerAverage.getHarmonicMedian());
+                    System.out.println("cpuLoggerAverage.getQuadradicMedian() = " + cpuLoggerAverage.getQuadradicMedian());
+                    System.out.println("cpuLoggerAverage.getWindorsAverage() = " + cpuLoggerAverage.getWindorsAverage());
+                    System.out.println("cpuLoggerAverage.getWindorsHarmonicMedian() = " + cpuLoggerAverage.getWindorsHarmonicMedian());
+                    System.out.println("cpuLoggerAverage.getWindorsOptimized() = " + cpuLoggerAverage.getWindorsOptimized());
+                }
+            }));
 
 
-        cpuLogger = new Timeline();
-        cpuLogger.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>()
+            cpuLogger = new Timeline();
+            cpuLogger.getKeyFrames().add(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>()
+            {
+                @Override
+                public void handle(ActionEvent event)
+                {
+                    ProcCpu cpu = null;
+                    try
+                    {
+                        cpu = sigar.getProcCpu(pid);
+
+                        cpuLoggerAverage.addNumber(cpu.getPercent());
+                        if (logging)
+                        {
+                            cpuAvgValue.setText((TestUtils.round(cpuLoggerAverage.getHarmonicMedian() * 100, 1)) + " %");
+                        }
+                    }
+                    catch (SigarException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                }
+            }));
+            cpuLogger.setCycleCount(Animation.INDEFINITE);
+        }
+
+        // a.start();
+
+        if (profiling)
         {
-            @Override
-            public void handle(ActionEvent event)
-            {
-                ProcCpu cpu = null;
-                try
-                {
-                    cpu = sigar.getProcCpu(pid);
+            cpuLoggerAverage.restart();
+            cpuLogger.play();
+            tt.play();
+        }
 
-                    cpuLoggerAverage.addNumber(cpu.getPercent());
-                    cpuAvgValue.setText((TestUtils.round(cpuLoggerAverage.getHarmonicMedian() * 100, 1)) + " %");
-                }
-                catch (SigarException e)
-                {
-                    e.printStackTrace();
-                }
+
+        Thread t = new Thread()
+        {
+
+            public void run()
+            {
 
             }
-        }));
-        cpuLogger.setCycleCount(Animation.INDEFINITE);
-
-        a.start();
-
-        cpuLoggerAverage.restart();
-        cpuLogger.play();
-        tt.play();
+        };
+        //t.start();
 
 
     }

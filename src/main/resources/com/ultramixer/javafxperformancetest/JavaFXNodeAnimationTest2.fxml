@@ -9,7 +9,7 @@
       styleClass="dialog,image-editor"
       fx:id="root" fx:controller="com.ultramixer.javafxperformancetest.JavaFXNodeAnimationTest2Controller">
 
-    <MigPane layout="" cols="[][][]push[][]push[][]" rows="[]" style="-fx-background-color: #BBBBBB;">
+    <MigPane layout="" cols="[][][]push[][][]push[][]" rows="[]" style="-fx-background-color: #BBBBBB;">
         <Label text="Tests"></Label>
         <ComboBox></ComboBox>
 
@@ -20,6 +20,9 @@
 
         <Label text="CPU (avg):"></Label>
         <Label fx:id="cpuAvgValue"></Label>
+
+        <Label text="FPS:"></Label>
+        <Label fx:id="fpsValue"></Label>
 
         <ToggleButton text="Play/Stop" fx:id="playStopButton"></ToggleButton>
         <Button text="Start Test" onAction="#handleStartTest"></Button>

@@ -45,22 +45,6 @@
             <artifactId>miglayout-javafx</artifactId>
             <version>5.0</version>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>sigar</groupId>
-            <artifactId>sigar</artifactId>
-            <version>1.0.0</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/libs/sigar.jar</systemPath>
-            <exclusions>
-                <exclusion>
-                    <artifactId>*</artifactId>
-                    <groupId>*</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        /7-->
-
         <dependency>
             <groupId>org.fusesource</groupId>
             <artifactId>sigar</artifactId>

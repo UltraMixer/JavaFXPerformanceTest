@@ -11,6 +11,11 @@ import javafx.scene.layout.Pane;
  */
 public class NullLayoutPane extends Pane
 {
+    public NullLayoutPane()
+    {
+        //this.setManaged(false);
+    }
+
     @Override
     public boolean isResizable()
     {
@@ -22,7 +27,7 @@ public class NullLayoutPane extends Pane
     protected void updateBounds()
     {
         //System.out.println("updateBounds");
-        //super.updateBounds();
+       // super.updateBounds();
     }
 
 
