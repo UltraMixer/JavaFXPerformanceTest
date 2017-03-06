@@ -25,6 +25,7 @@
         <Label fx:id="fpsValue"></Label>
 
         <ToggleButton text="Play/Stop" fx:id="playStopButton"></ToggleButton>
+        <ToggleButton text="Transition" fx:id="transitionButton"></ToggleButton>
         <Button text="Start Test" onAction="#handleStartTest"></Button>
     </MigPane>
     <NullLayoutPane fx:id="animationPane" VBox.vgrow="ALWAYS"></NullLayoutPane>

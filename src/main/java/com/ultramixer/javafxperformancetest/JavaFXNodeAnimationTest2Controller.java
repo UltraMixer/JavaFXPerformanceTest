@@ -48,6 +48,7 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
     public Label cpuValue;
     public Label cpuAvgValue;
     public Label fpsValue;
+    public ToggleButton transitionButton;
     private ArrayList<Node> animationNodes = new ArrayList<Node>();
     private ArrayList<TranslateTransition> animationTransitions = new ArrayList<TranslateTransition>();
     private Image movingImage;
@@ -124,11 +125,39 @@ public class JavaFXNodeAnimationTest2Controller implements Initializable
             }
         });
 
+        this.transitionButton.selectedProperty().addListener(new ChangeListener<Boolean>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+            {
+                if (newValue)
+                {
+                    //playAnimation(true);
+                    playTransition(true);
+
+                }
+                else
+                {
+                    playAnimation(false);
+                }
+            }
+        });
+
         this.initSigar();
 
 
         // root.setCache(true);
         //root.setCacheHint(CacheHint.SPEED);
+    }
+
+    private void playTransition(boolean b)
+    {
+        TranslateTransition tt = new TranslateTransition(Duration.millis(500), this.movingNode);
+        tt.setToX(600);
+        tt.setAutoReverse(true);
+        tt.setCycleCount(Animation.INDEFINITE);
+        tt.play();
+
     }
 
     private void playAnimation(boolean b)

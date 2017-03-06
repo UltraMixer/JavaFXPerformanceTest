@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/JavaFXPerformanceTest.iml" filepath="$PROJECT_DIR$/JavaFXPerformanceTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/JavaFXPerformanceTest.iml" filepath="$PROJECT_DIR$/.idea/modules/JavaFXPerformanceTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/JavaFXPerformanceTest_main.iml" filepath="$PROJECT_DIR$/.idea/modules/JavaFXPerformanceTest_main.iml" group="JavaFXPerformanceTest" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/JavaFXPerformanceTest_test.iml" filepath="$PROJECT_DIR$/.idea/modules/JavaFXPerformanceTest_test.iml" group="JavaFXPerformanceTest" />
     </modules>
   </component>
 </project>

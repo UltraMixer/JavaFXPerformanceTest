@@ -9,76 +9,92 @@ buildscript {
   }
 
   dependencies {
-    classpath 'org.javafxports:jfxmobile-plugin:1.0.0-b11-SNAPSHOT'
+    // classpath 'org.javafxports:jfxmobile-plugin:1.0.2-SNAPSHOT'
   }
 }
 
 
-allprojects {
+apply plugin: 'java'
 
-  apply plugin: 'java'
-
-
-  apply plugin: 'org.javafxports.jfxmobile'
-
-  mainClassName = "com.ultramixer.javafxperformancetest.JavaFXClockNodeTest"
-
-  repositories {
-    jcenter()
-    mavenCentral()
-    maven {
-      url "https://oss.sonatype.org/content/repositories/snapshots/"
-    }
+repositories {
+  mavenLocal()
+  mavenCentral()
+  jcenter()
+  maven {
+    url "http://dev.jpro.io:8081/nexus/content/repositories/jpro-snapshots"
   }
-
-  dependencies {
-
+  maven {
+    url "http://dev.jpro.io:8081/nexus/content/repositories/ultramixer-private"
   }
-
-
-
-
-  jfxmobile {
-
-    version = "1.0.0"
-
-    ios {
-
-      forceLinkClasses = ['java.util.TreeMap', 'java.util.TreeMap$KeySet', 'org.apache.commons.logging.impl.WeakHashtable', 'com.ultramixer.**.*', 'com.ultramixer.**.*Controller*', 'net.miginfocom.layout.**.*', 'org.tbee.javafx.scene.layout.fxml.MigPane', 'com.bea.xml.stream.MXParserFactory']
-      // Configure robovm
-
-      ipaArchs = ['thumbv7', 'arm64']
-      debug = false
-
-      //robovmSdk
-      //debug=true
-      //iosSdkLib
-      infoPList = file("_ios/Info.plist.xml")
-      propertiesFile = file("_ios/robovm.properties")
-      configFile = file("_ios/robovm.xml")
-
-
-    }
-
-    android {
-      applicationPackage = "com.ultramixer.javafxperformancetest"
-      androidSdk = file("/Applications/Developer/Java/android-sdk-macosx/")
-      //androidSdkPlatform = file('$androidSdk/platforms/android-19')
-      manifest = file('src/android/AndroidManifest.xml')
-      //resDirectory = 'src/android/res'
-
-      packagingOptions {
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/INDEX.LIST'
-      }
-    }
-
-
+  maven {
+    url "http://dev.jpro.io:8081/nexus/content/repositories/ultramixer-private-snapshots"
   }
 }
+
+dependencies {
+  compile 'org.fusesource:sigar:1.6.4'
+  compile('com.jprotechnologies.jpro:jpro-extensions:1.0.5-SNAPSHOT')
+
+}
+
+/*
+apply plugin: 'org.javafxports.jfxmobile'
+
+mainClassName = "com.ultramixer.javafxperformancetest.JavaFXClockNodeTest"
+
+repositories {
+  jcenter()
+  mavenCentral()
+  maven {
+    url "https://oss.sonatype.org/content/repositories/snapshots/"
+  }
+}
+
+dependencies {
+
+}
+
+jfxmobile {
+
+  version = "1.0.0"
+
+  ios {
+
+    forceLinkClasses = ['java.util.TreeMap', 'java.util.TreeMap$KeySet', 'org.apache.commons.logging.impl.WeakHashtable', 'com.ultramixer.**.*', 'com.ultramixer.**.*Controller*', 'net.miginfocom.layout.**.*', 'org.tbee.javafx.scene.layout.fxml.MigPane', 'com.bea.xml.stream.MXParserFactory']
+    // Configure robovm
+
+    ipaArchs = ['thumbv7', 'arm64']
+    debug = false
+
+    //robovmSdk
+    //debug=true
+    //iosSdkLib
+    infoPList = file("_ios/Info.plist.xml")
+    propertiesFile = file("_ios/robovm.properties")
+    configFile = file("_ios/robovm.xml")
+
+
+  }
+
+  android {
+    applicationPackage = "com.ultramixer.javafxperformancetest"
+    androidSdk = file("/Applications/Developer/Java/android-sdk-macosx/")
+    //androidSdkPlatform = file('$androidSdk/platforms/android-19')
+    manifest = file('src/android/AndroidManifest.xml')
+    //resDirectory = 'src/android/res'
+
+    packagingOptions {
+      exclude 'META-INF/LICENSE.txt'
+      exclude 'META-INF/LICENSE'
+      exclude 'META-INF/NOTICE.txt'
+      exclude 'META-INF/NOTICE'
+      exclude 'META-INF/INDEX.LIST'
+    }
+  }
+
+
+}
+*/
 
 
 
