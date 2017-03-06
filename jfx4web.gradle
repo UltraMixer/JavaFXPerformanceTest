@@ -1,0 +1,33 @@
+buildscript {
+  repositories {
+    jcenter()
+    maven {
+      url "http://sandec.bintray.com/repo"
+    }
+    mavenLocal()
+  }
+
+  dependencies {
+    classpath 'SANDEC:java4browser-plugin-gradle:0.1-SNAPSHOT'
+  }
+}
+
+repositories {
+  jcenter()
+  mavenLocal()
+}
+
+
+
+apply plugin: 'java'
+apply plugin: 'de.sandec.java4browser'
+
+
+dependencies {
+  compile("com.miglayout:miglayout-core:5.0")
+  compile('com.miglayout:miglayout-javafx:5.0')
+  compile('org.fusesource:sigar:1.6.4')
+
+}
+
+mainClassName = 'com.ultramixer.javafxperformancetest.JavaFXNodeAnimationTest2'
